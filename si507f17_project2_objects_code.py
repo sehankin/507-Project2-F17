@@ -115,7 +115,6 @@ print("\n***** PROBLEM 1 *****\n")
 #   (the title instance variable)
 
 
-
 # [PROBLEM 2] [400 POINTS]
 print("\n***** PROBLEM 2 *****\n")
 # In 2 parts.

@@ -81,4 +81,24 @@ def sample_get_cache_itunes_data(search_term, media_term="all"):
         return CACHE_DICTION[unique_ident]
 
 sia = sample_get_cache_itunes_data("sia")
-print(sia)
+
+# The Media class constructor should accept one dictionary data structure
+# representing a piece of media from iTunes as input to the constructor.
+
+# Saul: This "one dictionary data structure" input should be (e.g.)
+# sia["results"][0]
+
+# It should instatiate at least the following instance variables:
+# 1. title
+title = sia["results"][0]["trackName"]
+print("TITLE: " + str(title))
+# 2. author
+author = sia["results"][0]["artistName"]
+print("AUTHOR: " + str(author))
+# 3. itunes_URL
+itunes_URL = sia["results"][0]["trackViewUrl"]
+print("ITUNES_URL: " + str(itunes_URL))
+# 4. itunes_id (e.g. the value of the track ID, whatever the track is in
+#   the data... a movie, a song, etc)
+itunes_id = sia["results"][0]["trackId"]
+print("ITUNES_ID: " + str(itunes_id))

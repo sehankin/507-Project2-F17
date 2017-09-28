@@ -120,7 +120,15 @@ class Media(object):
         self.author = media_dct["artistName"]
         self.itunes_URL = media_dct["trackViewUrl"]
         self.itunes_id = media_dct["trackId"]
-        self.length_ms = media_dct["trackTimeMillis"]  # handy for subclasses
+        # Having self.length_ms as a class variable is handy when
+        # creating the subclasses' __len__() methods,
+        # but apparently not all media has the "trackTimeMillis" key
+        # (which is why I got a KeyError when I first ran problem 3 tests),
+        # hence the following try/except.
+        try:
+            self.length_ms = media_dct["trackTimeMillis"]
+        except:
+            self.length = None
 
     def __str__(self):
         return "{} by {}".format(self.title, self.author)
@@ -169,10 +177,14 @@ class Song(Media):
         self.album = media_dct["collectionName"]
         self.track_number = media_dct["trackNumber"]
         self.genre = media_dct["primaryGenreName"]
+        # self.length_ms = media_dct["trackTimeMillis"]
 
     def __len__(self):
-        length_s = int(self.length_ms / 1000)  # test doesn't want a float
-        return length_s
+        if self.length_ms:
+            length_s = int(self.length_ms / 1000)  # test doesn't want a float
+            return length_s
+        else:
+            return "N/A"
 
 # class Movie:
 
@@ -199,15 +211,19 @@ class Movie(Media):
         super().__init__(media_dct)
         self.rating = media_dct["contentAdvisoryRating"]
         self.genre = media_dct["primaryGenreName"]
-        if media_dct["longDescription"]:  # no Unicode trouble
-            self.description = media_dct["longDescription"]
+        if media_dct["longDescription"]:
+            self.description = media_dct["longDescription"]  # no UTF-8 issues
         else:
             self.description = None
+        # self.length_ms = media_dct["trackTimeMillis"]
 
     def __len__(self):
-        length_s = int(self.length_ms / 1000)
-        length_min = int(length_s / 60)
-        return length_min
+        if self.length_ms:
+            length_s = int(self.length_ms / 1000)
+            length_min = int(length_s / 60)
+            return length_min
+        else:
+            return "N/A"
 
     def title_words_num(self):
         if self.description:
@@ -236,7 +252,6 @@ song_samples = sample_get_cache_itunes_data("love", "music")["results"]
 
 movie_samples = sample_get_cache_itunes_data("love", "movie")["results"]
 
-
 # You may want to do some investigation on these variables to make sure
 # you understand correctly what type of value they hold, what's in each one!
 
@@ -251,10 +266,23 @@ movie_samples = sample_get_cache_itunes_data("love", "movie")["results"]
 
 # You may use any method of accumulation to make that happen.
 
+media_list = []
+for media_sample in media_samples:
+    media_object = Media(media_sample)
+    media_list.append(media_object)
+
+song_list = []
+for song_sample in song_samples:
+    song_object = Song(song_sample)
+    song_list.append(song_object)
+
+movie_list = []
+for movie_sample in movie_samples:
+    movie_object = Movie(movie_sample)
+    movie_list.append(movie_object)
 
 
-
-## [PROBLEM 4] [200 POINTS]
+# [PROBLEM 4] [200 POINTS]
 print("\n***** PROBLEM 4 *****\n")
 
 ## Finally, write 3 CSV files:
@@ -262,23 +290,37 @@ print("\n***** PROBLEM 4 *****\n")
 # - songs.csv
 # - media.csv
 
-## Each of those CSV files should have 5 columns each:
-# - title
-# - artist
-# - id
-# - url (for the itunes url of that thing -- the url to view that track of media on iTunes)
-# - length
+# Each of those CSV files should have 5 columns each:
+# 1. title
+# 2. artist
+# 3. id
+# 4. url (for the itunes url of that thing --
+#   the url to view that track of media on iTunes)
+# 5. length
 
-## There are no provided tests for this problem -- you should check your CSV files to see that they fit this description to see if this problem worked correctly for you. IT IS VERY IMPORTANT THAT YOUR CSV FILES HAVE EXACTLY THOSE NAMES!
+# There are no provided tests for this problem --
+# you should check your CSV files to see that they fit this description
+# to see if this problem worked correctly for you.
+# IT IS VERY IMPORTANT THAT YOUR CSV FILES HAVE EXACTLY THOSE NAMES!
 
-## You should use the variables you defined in problem 3, iteration, and thought-out use of accessing elements of a class instance, to complete this!
+# You should use the variables you defined in problem 3, iteration, and
+# thought-out use of accessing elements of a class instance, to complete this!
 
-## HINT: You may want to think about what code could be generalized here, and what couldn't, and write a function or two -- that might make your programming life a little bit easier in the end, even though it will require more thinking at the beginning! But you do not have to do this.
+# HINT: You may want to think about what code could be generalized here,
+# and what couldn't, and write a function or two --
+# that might make your programming life a little bit easier in the end,
+# even though it will require more thinking at the beginning!
+# But you do not have to do this.
 
-## HINT #2: *** You MAY add other, non-required, methods to the class definitions in order to make this easier, if you prefer to!
+# HINT #2: *** You MAY add other, non-required, methods to the
+# class definitions in order to make this easier, if you prefer to!
 
-## It is perfectly fine to write this code in any way, as long as you rely on instances of the classes you've defined, and the code you write results in 3 correctly formatted CSV files!
+# It is perfectly fine to write this code in any way, as long as you rely
+# on instances of the classes you've defined, and the code you write
+# results in 3 correctly formatted CSV files!
 
-## HINT #3: Check out the sections in the textbook on opening and writing files, and the section(s) on CSV files!
+# HINT #3: Check out the sections in the textbook
+# on opening and writing files, and the section(s) on CSV files!
 
-## HINT #4: Write or draw out your plan for this before you actually start writing the code! That will make it much easier.
+# HINT #4: Write or draw out your plan for this before you actually start
+# writing the code! That will make it much easier.

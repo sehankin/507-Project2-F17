@@ -104,5 +104,7 @@ def sample_get_cache_itunes_data(search_term, media_term="all"):
 # itunes_id = sia["results"][0]["trackId"]
 # print("ITUNES_ID: " + str(itunes_id))
 
-inception = sample_get_cache_itunes_data("inception")["results"][0]
-print(type(inception["longDescription"]))
+# inception = sample_get_cache_itunes_data("inception")["results"][0]
+# print(type(inception["longDescription"]))
+
+beatles = sample_get_cache_itunes_data("the beatles")

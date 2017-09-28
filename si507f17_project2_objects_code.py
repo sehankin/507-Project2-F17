@@ -113,12 +113,14 @@ print("\n***** PROBLEM 1 *****\n")
 #   the string representing the title of this piece of media
 #   (the title instance variable)
 
+
 class Media(object):
     def __init__(self, media_dct):
         self.title = media_dct["trackName"]
         self.author = media_dct["artistName"]
         self.itunes_URL = media_dct["trackViewUrl"]
         self.itunes_id = media_dct["trackId"]
+        self.length_ms = media_dct["trackTimeMillis"]  # handy for subclasses
 
     def __str__(self):
         return "{} by {}".format(self.title, self.author)
@@ -160,16 +162,16 @@ print("\n***** PROBLEM 2 *****\n")
 # in the song. (HINT: The data supplies number of milliseconds in the song...
 # How can you access that data and convert it to seconds?)
 
+
 class Song(Media):
     def __init__(self, media_dct):
         super().__init__(media_dct)
         self.album = media_dct["collectionName"]
         self.track_number = media_dct["trackNumber"]
         self.genre = media_dct["primaryGenreName"]
-        self.length_ms = media_dct["trackTimeMillis"]
 
     def __len__(self):
-        length_s = int(self.length_ms / 1000) # test doesn't want a float
+        length_s = int(self.length_ms / 1000)  # test doesn't want a float
         return length_s
 
 # class Movie:
@@ -192,32 +194,62 @@ class Song(Media):
 # If there is no movie description, this method should return 0.
 
 
+class Movie(Media):
+    def __init__(self, media_dct):
+        super().__init__(media_dct)
+        self.rating = media_dct["contentAdvisoryRating"]
+        self.genre = media_dct["primaryGenreName"]
+        if media_dct["longDescription"]:  # no Unicode trouble
+            self.description = media_dct["longDescription"]
+        else:
+            self.description = None
 
-## [PROBLEM 3] [150 POINTS]
+    def __len__(self):
+        length_s = int(self.length_ms / 1000)
+        length_min = int(length_s / 60)
+        return length_min
+
+    def title_words_num(self):
+        if self.description:
+            description_words = self.description.split()
+            description_words_num = len(description_words)
+            return description_words_num
+        else:
+            return 0
+
+# [PROBLEM 3] [150 POINTS]
 print("\n***** PROBLEM 3 *****\n")
 
-## In this problem, you'll write some code to use the definitions you've just written.
+# In this problem, you'll write some code to use the definitions
+# you've just written.
 
-## First, here we have provided some variables which hold data about media overall, songs, and movies.
+# First, here we have provided some variables
+# which hold data about media overall, songs, and movies.
 
-## NOTE: (The first time you run this file, data will be cached, so the data saved in each variable will be the same each time you run the file, as long as you do not delete your cached data.)
+# NOTE: The first time you run this file, data will be cached,
+# so the data saved in each variable will be the same each time
+# you run the file, as long as you do not delete your cached data.
 
 media_samples = sample_get_cache_itunes_data("love")["results"]
 
-song_samples = sample_get_cache_itunes_data("love","music")["results"]
+song_samples = sample_get_cache_itunes_data("love", "music")["results"]
 
-movie_samples = sample_get_cache_itunes_data("love","movie")["results"]
+movie_samples = sample_get_cache_itunes_data("love", "movie")["results"]
 
 
-## You may want to do some investigation on these variables to make sure you understand correctly what type of value they hold, what's in each one!
+# You may want to do some investigation on these variables to make sure
+# you understand correctly what type of value they hold, what's in each one!
 
-## Use the values in these variables above, and the class definitions you've written, in order to create a list of each media type, including "media" generally.
+# Use the values in these variables above, and the class definitions
+# you've written, in order to create a list of each media type,
+# including "media" generally.
 
-## You should end up with: a list of Media objects saved in a variable media_list,
-## a list of Song objects saved in a variable song_list,
-## a list of Movie objects saved in a variable movie_list.
+# You should end up with:
+#   1. a list of Media objects saved in a variable media_list
+#   2. a list of Song objects saved in a variable song_list,
+#   3. a list of Movie objects saved in a variable movie_list.
 
-## You may use any method of accumulation to make that happen.
+# You may use any method of accumulation to make that happen.
 
 
 

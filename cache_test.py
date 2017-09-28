@@ -80,7 +80,7 @@ def sample_get_cache_itunes_data(search_term, media_term="all"):
         cache_file_ref.close()
         return CACHE_DICTION[unique_ident]
 
-sia = sample_get_cache_itunes_data("sia")
+# sia = sample_get_cache_itunes_data("sia")
 # print(sia)
 
 # The Media class constructor should accept one dictionary data structure
@@ -91,15 +91,18 @@ sia = sample_get_cache_itunes_data("sia")
 
 # It should instatiate at least the following instance variables:
 # 1. title
-title = sia["results"][0]["trackName"]
-print("TITLE: " + str(title))
+# title = sia["results"][0]["trackName"]
+# print("TITLE: " + str(title))
 # 2. author
-author = sia["results"][0]["artistName"]
-print("AUTHOR: " + str(author))
+# author = sia["results"][0]["artistName"]
+# print("AUTHOR: " + str(author))
 # 3. itunes_URL
-itunes_URL = sia["results"][0]["trackViewUrl"]
-print("ITUNES_URL: " + str(itunes_URL))
+# itunes_URL = sia["results"][0]["trackViewUrl"]
+# print("ITUNES_URL: " + str(itunes_URL))
 # 4. itunes_id (e.g. the value of the track ID, whatever the track is in
 #   the data... a movie, a song, etc)
-itunes_id = sia["results"][0]["trackId"]
-print("ITUNES_ID: " + str(itunes_id))
+# itunes_id = sia["results"][0]["trackId"]
+# print("ITUNES_ID: " + str(itunes_id))
+
+inception = sample_get_cache_itunes_data("inception")["results"][0]
+print(type(inception["longDescription"]))

@@ -86,10 +86,8 @@ def sample_get_cache_itunes_data(search_term, media_term="all"):
 # [PROBLEM 1] [250 POINTS]
 print("\n***** PROBLEM 1 *****\n")
 
-
 # For problem 1, you should define a class Media, representing ANY
 # piece of media you can find on iTunes search.
-
 
 # The Media class constructor should accept one dictionary data structure
 # representing a piece of media from iTunes as input to the constructor.
@@ -114,6 +112,24 @@ print("\n***** PROBLEM 1 *****\n")
 #   the string representing the title of this piece of media
 #   (the title instance variable)
 
+class Media(object):
+    def __init__(self, media_dct):
+        self.title = media_dct["trackName"]
+        self.author = media_dct["artistName"]
+        self.itunes_URL = media_dct["trackViewUrl"]
+        self.itunes_id = media_dct["trackId"]
+
+    def __str__(self):
+        pass
+
+    def __repr__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __contains__(self):
+        pass
 
 # [PROBLEM 2] [400 POINTS]
 print("\n***** PROBLEM 2 *****\n")

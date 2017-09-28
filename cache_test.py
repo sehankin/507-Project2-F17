@@ -85,8 +85,8 @@ sia = sample_get_cache_itunes_data("sia")
 # The Media class constructor should accept one dictionary data structure
 # representing a piece of media from iTunes as input to the constructor.
 
-# Saul: This "one dictionary data structure" input should be (e.g.)
-# sia["results"][0] (and indeed, is something like this in the tests file).
+# Here, the "one dictionary data structure" input should be sia["results"][0]
+# (and indeed, it's something like this in the tests file).
 
 # It should instatiate at least the following instance variables:
 # 1. title

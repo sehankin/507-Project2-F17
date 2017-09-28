@@ -59,7 +59,7 @@ def params_unique_combination(baseurl, params_d, private_keys=["api_key"]):
 
 
 def sample_get_cache_itunes_data(search_term, media_term="all"):
-	CACHE_FNAME = 'cache_file_name.json'
+    CACHE_FNAME = 'cache_test.json'
     try:
         cache_file = open(CACHE_FNAME, 'r')
         cache_contents = cache_file.read()
@@ -75,7 +75,8 @@ def sample_get_cache_itunes_data(search_term, media_term="all"):
     if unique_ident in CACHE_DICTION:
         return CACHE_DICTION[unique_ident]
     else:
-        CACHE_DICTION[unique_ident] = json.loads(requests.get(baseurl, params=params).text)
+        reqget = requests.get(baseurl, params=params).text
+        CACHE_DICTION[unique_ident] = json.loads(reqget)
         full_text = json.dumps(CACHE_DICTION)
         cache_file_ref = open(CACHE_FNAME, "w")
         cache_file_ref.write(full_text)
@@ -120,16 +121,16 @@ class Media(object):
         self.itunes_id = media_dct["trackId"]
 
     def __str__(self):
-        pass
+        return "{} by {}".format(self.title, self.author)
 
     def __repr__(self):
-        pass
+        return "ITUNES MEDIA: {}".format(self.itunes_id)
 
     def __len__(self):
-        pass
+        return 0
 
-    def __contains__(self):
-        pass
+    def __contains__(self, input_str):
+        return input_str in self.title
 
 # [PROBLEM 2] [400 POINTS]
 print("\n***** PROBLEM 2 *****\n")

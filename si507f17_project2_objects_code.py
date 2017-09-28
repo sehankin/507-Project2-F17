@@ -128,7 +128,7 @@ class Media(object):
         try:
             self.length_ms = media_dct["trackTimeMillis"]
         except:
-            self.length = None
+            self.length_ms = None
 
     def __str__(self):
         return "{} by {}".format(self.title, self.author)
@@ -212,7 +212,7 @@ class Movie(Media):
         self.rating = media_dct["contentAdvisoryRating"]
         self.genre = media_dct["primaryGenreName"]
         if media_dct["longDescription"]:
-            self.description = media_dct["longDescription"]  # no UTF-8 issues
+            self.description = media_dct["longDescription"]
         else:
             self.description = None
         # self.length_ms = media_dct["trackTimeMillis"]
@@ -285,10 +285,10 @@ for movie_sample in movie_samples:
 # [PROBLEM 4] [200 POINTS]
 print("\n***** PROBLEM 4 *****\n")
 
-## Finally, write 3 CSV files:
-# - movies.csv
-# - songs.csv
-# - media.csv
+# Finally, write 3 CSV files:
+# 1. movies.csv
+# 2. songs.csv
+# 3. media.csv
 
 # Each of those CSV files should have 5 columns each:
 # 1. title
@@ -324,3 +324,21 @@ print("\n***** PROBLEM 4 *****\n")
 
 # HINT #4: Write or draw out your plan for this before you actually start
 # writing the code! That will make it much easier.
+
+
+def write_list_of_media_objects_to_csv(list_of_media_objects, file_name):
+    outfile = open(file_name, "w")
+    outfile.write("TITLE, ARTIST, ID, URL, LENGTH\n")
+    for media_object in list_of_media_objects:
+        title = media_object.title
+        artist = media_object.author
+        media_id = media_object.itunes_id
+        url = media_object.itunes_URL
+        length = media_object.__len__()
+        format_tup = (title, artist, media_id, url, length)
+        outfile.write('"{}", "{}", "{}", "{}", "{}"\n'.format(*format_tup))
+    outfile.close()
+
+media_csv = write_list_of_media_objects_to_csv(media_list, "media.csv")
+songs_csv = write_list_of_media_objects_to_csv(song_list, "songs.csv")
+movies_csv = write_list_of_media_objects_to_csv(movie_list, "movies.csv")

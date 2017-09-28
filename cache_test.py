@@ -81,6 +81,7 @@ def sample_get_cache_itunes_data(search_term, media_term="all"):
         return CACHE_DICTION[unique_ident]
 
 sia = sample_get_cache_itunes_data("sia")
+# print(sia)
 
 # The Media class constructor should accept one dictionary data structure
 # representing a piece of media from iTunes as input to the constructor.

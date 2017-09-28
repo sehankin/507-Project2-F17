@@ -132,6 +132,7 @@ class Media(object):
     def __contains__(self, input_str):
         return input_str in self.title
 
+
 # [PROBLEM 2] [400 POINTS]
 print("\n***** PROBLEM 2 *****\n")
 # In 2 parts.
@@ -159,7 +160,17 @@ print("\n***** PROBLEM 2 *****\n")
 # in the song. (HINT: The data supplies number of milliseconds in the song...
 # How can you access that data and convert it to seconds?)
 
+class Song(Media):
+    def __init__(self, media_dct):
+        super().__init__(media_dct)
+        self.album = media_dct["collectionName"]
+        self.track_number = media_dct["trackNumber"]
+        self.genre = media_dct["primaryGenreName"]
+        self.length_ms = media_dct["trackTimeMillis"]
 
+    def __len__(self):
+        length_s = int(self.length_ms / 1000) # test doesn't want a float
+        return length_s
 
 # class Movie:
 

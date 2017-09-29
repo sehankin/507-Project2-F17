@@ -340,11 +340,7 @@ def write_list_of_media_objects_to_csv(list_of_media_objects, file_name):
         # The above commented-out way of writing to a CSV file results
         # in there being double quotes around the values of the columns
         # ARTIST, ID, URL, and LENGTH.
-        # The below way of writing to a CSV takes care of those double quotes,
-        # but causes some values in the ID column to initially appear as
-        # pound signs (i.e. #########) until their cell is double-clicked-on.
-        # Whichever method is applied, Beyonce's name appears as BeyoncÃ©,
-        # and the .encode("utf-8") method only makes things worse.
+        # The below way of writing to a CSV removes those double quotes.
         outfile.write('"{}",'.format(title))
         outfile.write('"{}",'.format(artist))
         outfile.write('"{}",'.format(media_id))

@@ -335,16 +335,6 @@ def write_list_of_media_objects_to_csv(list_of_media_objects, file_name):
         media_id = media_object.itunes_id
         url = media_object.itunes_URL
         length = media_object.__len__()
-        format_tup = (title, artist, media_id, url, length)
-        # outfile.write('"{}", "{}", "{}", "{}", "{}"\n'.format(*format_tup))
-        # The above commented-out way of writing to a CSV file results
-        # in there being double quotes around the values of the columns
-        # ARTIST, ID, URL, and LENGTH.
-        # The below way of writing to a CSV takes care of those double quotes,
-        # but causes some values in the ID column to initially appear as
-        # pound signs (i.e. #########) until their cell is double-clicked-on.
-        # Whichever method is applied, Beyonce's name appears as BeyoncÃ©,
-        # and the .encode("utf-8") method only makes things worse.
         outfile.write('"{}",'.format(title))
         outfile.write('"{}",'.format(artist))
         outfile.write('"{}",'.format(media_id))
@@ -352,6 +342,4 @@ def write_list_of_media_objects_to_csv(list_of_media_objects, file_name):
         outfile.write('"{}"\n'.format(length))
     outfile.close()
 
-media_csv = write_list_of_media_objects_to_csv(media_list, "media.csv")
-songs_csv = write_list_of_media_objects_to_csv(song_list, "songs.csv")
-movies_csv = write_list_of_media_objects_to_csv(movie_list, "movies.csv")
+songs_csv = write_list_of_media_objects_to_csv(song_list, "csv_test.csv")

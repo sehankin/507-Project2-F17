@@ -59,7 +59,7 @@ def params_unique_combination(baseurl, params_d, private_keys=["api_key"]):
 
 
 def sample_get_cache_itunes_data(search_term, media_term="all"):
-    CACHE_FNAME = 'cache_test.json'
+    CACHE_FNAME = 'cache_file_name.json'
     try:
         cache_file = open(CACHE_FNAME, 'r')
         cache_contents = cache_file.read()
